@@ -47,7 +47,7 @@ sensitivity analysis) · TO VERIFY / TO SOURCE (blocks the memo until resolved).
 |---|---|---|---|---|
 | E1 | Claims reduction from mitigation/repair | ESTIMATE, range 10–50%, **conditional on claims-density targeting** | ESTIMATE w/ comparator narrative | See LA natural experiment below |
 | E2 | Ramping turnaround target after FY24 crew adds | 1 day report-to-ramp | SOURCED | GJ24, citing budget KPI target |
-| E3 | Construction cost inflation (concrete/labor, SD) | — | TO SOURCE | ENR CCI or Caltrans index; last remaining open source item |
+| E3 | Construction cost escalation (SD region) | Methodology sourced; exact % = compute from CCCI table | SOURCED-METHOD | SANDAG 2025 Regional Plan Appendix H escalates construction costs using the 10-year *trimmed* average of annual ENR cost increases (dropping the highest and lowest post-pandemic years). Index: CA DGS CCCI (ENR BCI, SF+LA average, monthly table at dgs.ca.gov). Adopt SANDAG's method verbatim — it is the region's own planning standard — and compute the % from the CCCI five-year table. Do not hardcode a rate until computed. |
 
 **The LA natural experiment (E1's evidence base).** Los Angeles has spent
 ~$226M on sidewalk repair since the 2016 Willits settlement ($1.37B/30yr) —
@@ -106,3 +106,5 @@ Sources: LA Controller audit "Repairing L.A.'s Broken Sidewalk Strategy"
 - Willits spend-to-date: https://www.westsidecurrent.com/news/l-a-promised-to-fix-sidewalks-for-1-37-billion-it-s-still-settling-multimillion/article_74a44d23-085e-429b-bd98-7c960b1ad38f.html
 - DOT VSL guidance: https://www.transportation.gov/office-policy/transportation-policy/revised-departmental-guidance-on-valuation-of-a-statistical-life-in-economic-analysis
 - OMB A-94 Appendix C (rates): https://www.whitehouse.gov/wp-content/uploads/2023/12/CircularA-94AppendixC.pdf
+- SANDAG 2025 Regional Plan, Appendix H (escalation methodology): https://www.sandag.org/2025rpappendixh
+- CA DGS CCCI (index tables): https://www.dgs.ca.gov/RESD/Resources/Page-Content/Real-Estate-Services-Division-Resources-List-Folder/DGS-California-Construction-Cost-Index-CCCI
