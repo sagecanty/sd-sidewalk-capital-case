@@ -41,20 +41,41 @@ sensitivity analysis) · TO VERIFY / TO SOURCE (blocks the memo until resolved).
 | V3 | 5-Yr Capital Outlook: sidewalk need / funding gap | $104M / $88.1M | SOURCED | GJ24, citing FY25–29 Five-Year Capital Infrastructure Planning Outlook |
 | V4 | Deficit rolls forward (accumulates, not resets) | — | SOURCED | GJ24, explicit statement |
 
-## 4. Intervention effectiveness (the remaining soft spot)
+## 4. Intervention effectiveness (E1) — comparator evidence
 
 | # | Input | Value | Rating | Source |
 |---|---|---|---|---|
-| E1 | Ramping/slicing reduces trip-and-fall likelihood | Directional (GJ24 Finding F4) | SOURCED-DIRECTIONAL | GJ24 — but NO effectiveness %. The claims-avoided-per-mitigated-location rate is the model's single most important ESTIMATE; must dominate the tornado |
+| E1 | Claims reduction from mitigation/repair | ESTIMATE, range 10–50%, **conditional on claims-density targeting** | ESTIMATE w/ comparator narrative | See LA natural experiment below |
 | E2 | Ramping turnaround target after FY24 crew adds | 1 day report-to-ramp | SOURCED | GJ24, citing budget KPI target |
-| E3 | Construction cost inflation (concrete/labor, SD) | — | TO SOURCE | ENR CCI or Caltrans index; drives cost-of-waiting |
+| E3 | Construction cost inflation (concrete/labor, SD) | — | TO SOURCE | ENR CCI or Caltrans index; last remaining open source item |
+
+**The LA natural experiment (E1's evidence base).** Los Angeles has spent
+~$226M on sidewalk repair since the 2016 Willits settlement ($1.37B/30yr) —
+roughly $30M/yr — while sidewalk injury settlements *rose*: ~$5M/yr pre-2015,
+$35M total over FY16–20 ($12M in FY20 alone), and ~$86M over the five years
+to 2025. Repair volume without claims-targeting did not bend the claims
+curve. The 2021 LA Controller audit explains why: repairs prioritized ADA
+access requests and city-facility sidewalks over claim-dense residential
+locations, and replaced whole parcels where spot fixes sufficed. LA's
+targeted variant (StreetsLA Risk & Liability Mitigation Program, FY2020,
+repairs at known claim/lawsuit locations) is the right design but too small
+(~170 locations by FY21) and too recent to measure.
+**Model implication:** E1 stays an estimate, but targeting is a design
+requirement, not a preference — untargeted spend gets E1 ≈ 0 in the downside
+scenario, per LA's revealed experience. LA avg full-replacement cost
+~$12,000/property is also a unit-cost comparator vs. SD's cost-share anchor.
+Sources: LA Controller audit "Repairing L.A.'s Broken Sidewalk Strategy"
+(2021); ABC7/Westside Current/Planetizen follow-ups (2024–25).
 
 ## 5. Finance parameters
 
 | # | Input | Value | Rating | Source |
 |---|---|---|---|---|
-| F1 | Real discount rate | 3.0% placeholder | ESTIMATE / TO VERIFY | Pin to OMB Circular A-94 or SD GO-bond real yield; sensitivity 2–7% |
+| F1 | Real discount rate | Run 2% / 3% / 7% — regime is genuinely unsettled | SOURCED-REGIME | OMB's 2023 A-94 revision was revoked by Memo M-25-23 (Apr 2025), reinstating the 1992 circular (7% real base case). Appendix C (rev. Nov 2024) publishes Treasury-based real rates for 2025 (~2% range — pull exact figure from the PDF before the memo cites it). Municipal alternative: SD GO-bond real yield. The memo states the regime flux openly and shows all three. |
 | F2 | Analysis horizon | 10 yr placeholder | ESTIMATE | Test 5/10/20; justify vs. B9 useful life |
+| F3 | DOT Value of Statistical Life (societal framing only) | $14.2M (base year 2025) | SOURCED | DOT Departmental Guidance on VSL, 2025 update |
+| F4 | Injury valuation ≠ full VSL | Trip-and-falls are overwhelmingly non-fatal → use DOT's MAIS injury-severity fractions of VSL, not the full $14.2M | SOURCED-METHOD | Same DOT guidance publishes fractions by injury severity — verify current fraction table before use. Using full VSL per claim would overstate societal benefits by an order of magnitude; a model that does that is propaganda, not analysis. |
+| F5 | Paid claims undercount true injuries | ~50 paid claims/yr (L1) < injuries occurring | DERIVED-DIRECTIONAL | Not everyone injured files or wins; societal framing counting paid claims only is conservative. State the undercount, do not invent a multiplier. |
 
 ## 6. Model-shaping facts
 
@@ -77,3 +98,11 @@ sensitivity analysis) · TO VERIFY / TO SOURCE (blocks the memo until resolved).
 - FY25–29 Capital Outlook: https://www.sandiego.gov/sites/default/files/2024-01/fy-25-29-five-year-capital-infrastructure-planning-outlook.pdf
 - City Attorney ML-2013-16: https://docs.sandiego.gov/memooflaw/ML-2013-16.pdf
 - Own prior analysis: https://github.com/sezgiozrn/Getitdone-teardown
+
+## 7b. Source links (round 2)
+
+- LA Controller audit (2021): https://controller.lacity.gov/audits/sidewalks
+- LA payouts follow-up: https://abc7.com/post/la-jury-awards-3-million-man-broken-sidewalk-citys-latest-liability-payout/17516274/
+- Willits spend-to-date: https://www.westsidecurrent.com/news/l-a-promised-to-fix-sidewalks-for-1-37-billion-it-s-still-settling-multimillion/article_74a44d23-085e-429b-bd98-7c960b1ad38f.html
+- DOT VSL guidance: https://www.transportation.gov/office-policy/transportation-policy/revised-departmental-guidance-on-valuation-of-a-statistical-life-in-economic-analysis
+- OMB A-94 Appendix C (rates): https://www.whitehouse.gov/wp-content/uploads/2023/12/CircularA-94AppendixC.pdf
