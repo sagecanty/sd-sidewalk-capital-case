@@ -7,9 +7,12 @@ left open: its decision memo recommended a capital-assessment track for
 sidewalk repair and flagged, as the first thing to validate, whether the
 backlog is a capital-funding constraint. This project prices that constraint.
 
-**The question:** Does accelerating sidewalk repair in the two worst-backlog
-districts (D2, D7) pay for itself in avoided trip-and-fall liability and
-avoided repair-cost escalation — and at what funding level?
+**The question:** The 2023/24 Grand Jury recommended proactive sidewalk
+remediation but explicitly declined to size it — no crew count, no budget, no
+scope. This model sizes it: which intervention mix (cheap mitigation vs.
+replacement acceleration, at what funding level, targeted by backlog age vs.
+claims density) minimizes the city's total cost of sidewalks — claims plus
+repairs — in NPV terms?
 
 **Deliverables (planned):**
 [Assumptions log](02-assumptions-log.md) ·
