@@ -1,6 +1,13 @@
 # San Diego Sidewalk Repair — Capital Investment Case
 
-**Status: WIP — model in progress. Nothing below the assumptions log is final.**
+> **The finding:** "sidewalk repairs pay for themselves through avoided
+> lawsuits" does not survive arithmetic. Mitigation at scale is NPV **–$11.0M**
+> and replacement acceleration **–$116.8M** over 10 years on avoided-claims
+> economics alone — and no single assumption at its favorable extreme flips
+> the sign. The honest case needs either unit cost under a **~$71/location**
+> breakeven or **$1.29M/yr** of benefits beyond liability (ADA, asset
+> preservation) — a quantified, clearable bar.
+> **Start here → [Business case memo](04-business-case-memo.md)**
 
 A finance-BA engagement on a question the [Get It Done teardown](https://github.com/sezgiozrn/Getitdone-teardown)
 left open: its decision memo recommended a capital-assessment track for
@@ -14,13 +21,13 @@ replacement acceleration, at what funding level, targeted by backlog age vs.
 claims density) minimizes the city's total cost of sidewalks — claims plus
 repairs — in NPV terms?
 
-**Deliverables (planned):**
+**Deliverables:**
+[Business case memo](04-business-case-memo.md) ·
 [Assumptions log](02-assumptions-log.md) ·
 [Model spec](03-model/model-spec.md) ·
-Excel model (`03-model/`) ·
-[Business case memo](04-business-case-memo.md)
+Excel model (`03-model/sidewalk_capital_model.xlsx`)
 
-**Stack:** Excel (model) · Python (data prep only) · Claude + Copilot (AI-assisted)
+**Stack:** Excel (model) · Python (scaffold + sensitivity) · Claude + Copilot (AI-assisted)
 
 ## Why this exists
 

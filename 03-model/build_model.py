@@ -152,6 +152,33 @@ for i, e in enumerate(e1_axis):
 out["B2"] = round(BASE_NPVB)
 out.cell(row=2, column=1, value="NPV Option B vs do-nothing (Python base = NPV tab)")
 
+# ---- Option C python mirror + derived headline figures for OUTPUT ----
+def npvC(v1=base["V1"], actual=base["V2"], v3=104_000_000, effC=base["MC2"],
+         fundC=base["MC1"], claims=base["L1"], disc=base["F1"], horizon=base["F2"]):
+    total, cum = 0.0, 0.0
+    for t in range(1, int(horizon) + 1):
+        d = 1 / (1 + disc) ** t
+        outlay = max(0.0, fundC * v1 - actual)
+        cum += outlay
+        clear = min(1.0, cum / v3)
+        total += ((claims - claims * (1 - clear * effC)) - outlay) * d
+    return total
+
+BASE_NPVC = npvC()
+
+# breakeven costloc for option B (npvB is linear in costloc: two-point solve)
+n150, n600 = npvB(costloc=150), npvB(costloc=600)
+slope = (n600 - n150) / (600 - 150)
+BREAKEVEN_COSTLOC = 150 - n150 / slope
+
+# required additional annual benefit (beyond avoided claims) for B to break even
+af = sum(1 / (1 + base["F1"]) ** t for t in range(1, int(base["F2"]) + 1))
+REQUIRED_ANNUAL_BENEFIT = -BASE_NPVB / af
+
+out.append(["NPV Option C vs do-nothing (Python base, mirrors NPV tab)", round(BASE_NPVC)])
+out.append(["Breakeven cost/location for B (derived, linear in costloc)", round(BREAKEVEN_COSTLOC)])
+out.append(["Additional annual benefit needed for B to break even (beyond avoided claims)", round(REQUIRED_ANNUAL_BENEFIT)])
+
 # Writes model_skeleton.xlsx — the reproducible scaffold. The hand-finished
 # canonical workbook is sidewalk_capital_model.xlsx: copy the skeleton over it
 # ONLY when regenerating from scratch is intended; the script never touches
