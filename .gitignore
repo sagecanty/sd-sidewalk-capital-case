@@ -3,3 +3,4 @@ data/
 __pycache__/
 .DS_Store
 .env
+03-model/model_skeleton.xlsx

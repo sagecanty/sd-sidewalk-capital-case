@@ -89,10 +89,74 @@ out.column_dimensions["A"].width = 52
 for name, note in [
     ("CLAIMS", "Hand-build per spec: 2015-21 series detail, severity distribution incl. L4 tail."),
     ("OPTIONS", "Hand-build per spec: per-option cost detail; NPV tab holds v0 math."),
-    ("SENSITIVITY", "Hand-build: tornado on every ESTIMATE input (spec rule #1), two-way on top 2 drivers."),
 ]:
     s = wb.create_sheet(name)
     s["A1"] = note
 
-wb.save(__file__.replace("build_model.py", "sidewalk_capital_model.xlsx"))
-print("wrote sidewalk_capital_model.xlsx")
+# ============================================================
+# SENSITIVITY  (live tornado + static two-way)
+# ============================================================
+# Base values pulled from INPUTS by log ID so this stays in sync w/ workbook.
+# npvB() mirrors the NPV-tab Option-B (mitigation) formula exactly.
+base = {logid: val for (_l, val, _u, logid, _r) in INPUTS}
+
+def npvB(claims=base["L1"], e1=base["E1"], rollout=base["MB1"],
+         costloc=base["E1b"], hazards=base["B1"], disc=base["F1"],
+         horizon=base["F2"]):
+    total = 0.0
+    for t in range(1, int(horizon) + 1):
+        d = 1 / (1 + disc) ** t
+        outlay = rollout * hazards * costloc / 3 if t <= 3 else 0.0
+        claims_b = claims * (1 - min(t / 3, 1) * rollout * e1)
+        total += ((claims - claims_b) - outlay) * d
+    return total
+
+BASE_NPVB = npvB()
+
+# ---- one-way tornado (static values; ranges trace to assumptions log) ----
+tornado_vars = [
+    ("E1 mitigation effectiveness", "e1", 0.0, 0.50, "floor 0.0 = LA untargeted downside (E1 evidence base); 0.50 targeted upper remains a guess"),
+    ("Cost per location mitigated", "costloc", 150, 600, "E1b ESTIMATE anchored to B5 ramping-crew cost; log rule: every ESTIMATE stays in the tornado"),
+    ("Option B rollout share", "rollout", 0.30, 0.90, "policy lever, not uncertainty - shown for completeness; scenario axis in the memo"),
+    ("Baseline annual claims", "claims", 2.0e6, 2.9e6, "L1 2015-21 avg to L3 FY23 high"),
+    ("Discount rate", "disc", 0.02, 0.07, "F1 regime flux: A-94 Appendix C ~2% to reinstated 7% base"),
+    ("Horizon (years)", "horizon", 5, 20, "F2; vs B9 50-75yr useful life"),
+]
+sens = wb.create_sheet("SENSITIVITY")
+sens["A1"] = "TORNADO (Python-computed; ranges trace to assumptions-log IDs; E1 floored at 0.0 per LA natural experiment)"
+sens.append([])
+sens.append(["Input", "Low NPV_B", "High NPV_B", "Swing", "Base NPV_B", "Range rationale"])
+trows = []
+for label, kw, lo, hi, why in tornado_vars:
+    nlo, nhi = npvB(**{kw: lo}), npvB(**{kw: hi})
+    trows.append((label, nlo, nhi, abs(nhi - nlo), BASE_NPVB, why))
+trows.sort(key=lambda r: r[3], reverse=True)
+for r in trows:
+    sens.append([r[0], round(r[1]), round(r[2]), round(r[3]), round(r[4]), r[5]])
+sens.column_dimensions["A"].width = 30
+sens.column_dimensions["F"].width = 50
+
+# ---- static two-way: E1 x cost-per-location (E1=0.0 row = LA untargeted downside) ----
+e1_axis = [0.0, 0.10, 0.20, 0.30, 0.40, 0.50]
+cost_axis = [150, 250, 350, 450, 600]
+st = len(trows) + 6
+sens.cell(row=st, column=1, value="TWO-WAY: NPV_B by E1 (rows) x $/location (cols). Rebuild as a live Excel Data Table in the hand-finished workbook (What-If Analysis; corner ='NPV'!O1, row input INPUTS!B11, col input INPUTS!B10).")
+sens.cell(row=st + 1, column=1, value="E1 \\ $loc")
+for j, c in enumerate(cost_axis):
+    sens.cell(row=st + 1, column=2 + j, value=c)
+for i, e in enumerate(e1_axis):
+    sens.cell(row=st + 2 + i, column=1, value=e)
+    for j, c in enumerate(cost_axis):
+        sens.cell(row=st + 2 + i, column=2 + j, value=round(npvB(e1=e, costloc=c)))
+
+out["B2"] = round(BASE_NPVB)
+out.cell(row=2, column=1, value="NPV Option B vs do-nothing (Python base = NPV tab)")
+
+# Writes model_skeleton.xlsx — the reproducible scaffold. The hand-finished
+# canonical workbook is sidewalk_capital_model.xlsx: copy the skeleton over it
+# ONLY when regenerating from scratch is intended; the script never touches
+# the canonical file, so hand refinements (Data Table, formatting) are safe.
+wb.save(__file__.replace("build_model.py", "model_skeleton.xlsx"))
+print(f"wrote model_skeleton.xlsx | base NPV_B = {BASE_NPVB/1e6:.1f}M")
+for r in trows:
+    print(f"  {r[0]:<32} swing {r[3]/1e6:5.1f}M")
